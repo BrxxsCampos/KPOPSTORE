@@ -255,9 +255,31 @@
         <div class="checkout__seal" aria-hidden="true">
           <span>GRÁTIS</span><small>só o frete</small>
         </div>
+
+        <div class="card checkout__summary reveal" id="resumoPedido">
+          <h3 class="checkout__summary-title">Resumo do pedido</h3>
+          <ul class="checkout__summary-list" role="list">
+            <li><span>Pack Drop 01 · 7 bonecos</span><strong>Grátis</strong></li>
+            <li id="linhaFrete" hidden><span>Frete promocional</span><strong>R$ 37,00</strong></li>
+            <li class="checkout__summary-total" id="linhaTotal" hidden><span>Total</span><strong>R$ 37,00</strong></li>
+          </ul>
+          <p class="checkout__summary-note" id="resumoNota">Informe seu CEP no formulário para liberarmos o valor do frete.</p>
+        </div>
       </div>
 
-      <form class="card form reveal" id="formCheckout" novalidate>
+      <div class="checkout__flow reveal">
+        <ol class="flow" id="flow">
+          <li class="flow__item is-active" data-flow="1"><span>1</span>Seus dados</li>
+          <li class="flow__item" data-flow="2"><span>2</span>Frete e total</li>
+          <li class="flow__item" data-flow="3"><span>3</span>Pagamento Pix</li>
+        </ol>
+
+      <form class="card form" id="formCheckout" novalidate>
+        <div class="form__head">
+          <span class="form__step">Etapa 1 de 3</span>
+          <h3 class="form__title">Seus dados</h3>
+          <p class="form__sub">O produto é grátis. Informe seus dados e o CEP para calcularmos o frete promocional.</p>
+        </div>
         <div class="field">
           <label for="nome">Nome completo</label>
           <input id="nome" name="nome" type="text" autocomplete="name" required placeholder="Seu nome" />
@@ -284,49 +306,62 @@
           <input id="endereco" name="endereco" type="text" autocomplete="street-address" required placeholder="Rua, número, bairro" />
           <span class="field__error" data-error-for="endereco"></span>
         </div>
-        <button class="btn btn--primary btn--full" type="submit">Calcular frete e finalizar</button>
+        <button class="btn btn--primary btn--full" type="submit" id="btnStep1">Calcular frete e continuar</button>
         <p class="form__msg" id="formMsg" role="status"></p>
+      </form>
 
-        <!-- ETAPA 2: FRETE + PIX -->
-        <div class="pagamento" id="pagamento" hidden>
-          <div class="pagamento__frete">
-            <div class="pagamento__frete-info">
-              <span class="badge-frete">FRETE PROMOCIONAL</span>
-              <p class="pagamento__frete-valor"><span>Frete para o seu CEP</span><strong>R$ 37,00</strong></p>
-              <p class="pagamento__frete-note">Campa Drop 01: o produto é gratuito e o frete tem valor promocional de <strong>R$ 37,00</strong>.</p>
+      <!-- ETAPA 2: FRETE -->
+      <section class="card stepbox" id="stepFrete" hidden aria-live="polite">
+        <div class="form__head">
+          <span class="form__step">Etapa 2 de 3</span>
+          <h3 class="form__title">Frete e total</h3>
+          <p class="form__sub">Preço promocional de hoje para o seu CEP. Semeadura rápida, envio direto dos 7 bonecos.</p>
+        </div>
+        <div class="pagamento__frete">
+          <span class="badge-frete">FRETE PROMOCIONAL · HOJE</span>
+          <p class="pagamento__frete-valor"><span>Frete para o seu CEP</span><strong>R$ 37,00</strong></p>
+          <p class="pagamento__frete-note">Campa Drop 01: o produto é gratuito e o frete tem valor promocional de <strong>R$ 37,00</strong> — preço válido apenas hoje.</p>
+        </div>
+        <ul class="pagamento__resumo" role="list">
+          <li><span>Pack colecionável (7 bonecos)</span><strong>Grátis</strong></li>
+          <li><span>Frete</span><strong>R$ 37,00</strong></li>
+          <li class="pagamento__total"><span>Total a pagar</span><strong>R$ 37,00</strong></li>
+        </ul>
+        <div class="stepbox__actions">
+          <button class="btn btn--primary btn--full" type="button" id="btnIrPagamento">Ir para o pagamento Pix</button>
+          <button class="btn btn--ghost btn--full" type="button" id="btnVoltarDados">Editar meus dados</button>
+        </div>
+      </section>
+
+      <!-- ETAPA 3: PIX -->
+      <section class="card stepbox stepbox--pix" id="stepPagamento" hidden aria-live="polite">
+        <div class="form__head">
+          <span class="form__step">Etapa 3 de 3</span>
+          <h3 class="form__title">Pagamento via Pix</h3>
+          <p class="form__sub">Único método de pagamento. O QR Code é gerado aqui na página — você não sai dela.</p>
+        </div>
+        <div class="pix__head">
+          <h4 class="pix__title">Gerar Pix de R$ 37,00</h4>
+          <span class="pix__tag">Seguro · confirmação na hora</span>
+        </div>
+        <button class="btn btn--primary btn--full pix__btn" type="button" id="btnPix">Gerar Pix</button>
+        <div class="pix__panel" id="pixPanel" hidden>
+          <div class="pix__qr" id="pixQr" aria-label="QR Code do Pix"></div>
+          <div class="pix__data">
+            <p class="pix__valor">R$ 37,00 <span>· frete do Drop 01</span></p>
+            <label class="pix__label" for="pixPayload">Código Pix copia e cola</label>
+            <textarea id="pixPayload" class="pix__code" readonly rows="3" spellcheck="false"></textarea>
+            <div class="pix__actions">
+              <button class="btn btn--ghost btn--sm" type="button" id="btnCopiar">Copiar código</button>
+              <button class="btn btn--ghost btn--sm" type="button" id="btnCopiarLink">Copiar link de pagamento</button>
             </div>
-            <ul class="pagamento__resumo" role="list">
-              <li><span>Pack colecionável (7 bonecos)</span><strong>Grátis</strong></li>
-              <li><span>Frete</span><strong>R$ 37,00</strong></li>
-              <li class="pagamento__total"><span>Total</span><strong>R$ 37,00</strong></li>
-            </ul>
+            <p class="pix__hint">Abra o app do seu banco, escolha <strong>Pix &rsaquo; Ler QR Code</strong> ou cole o código. O pedido é confirmado assim que o pagamento é identificado — você não sai desta página.</p>
+            <p class="pix__status" id="pixStatus" role="status"></p>
           </div>
         </div>
-
-        <div class="pix">
-            <div class="pix__head">
-              <h3 class="pix__title">Pagamento via Pix</h3>
-              <span class="pix__tag">Único método · sem sair da página</span>
-            </div>
-
-            <button class="btn btn--primary btn--full pix__btn" type="button" id="btnPix">Gerar Pix</button>
-
-            <div class="pix__panel" id="pixPanel" hidden>
-              <div class="pix__qr" id="pixQr" aria-label="QR Code do Pix"></div>
-              <div class="pix__data">
-                <p class="pix__valor">R$ 37,00 <span>· frete do Drop 01</span></p>
-                <label class="pix__label" for="pixPayload">Código Pix copia e cola</label>
-                <textarea id="pixPayload" class="pix__code" readonly rows="3" spellcheck="false"></textarea>
-                <div class="pix__actions">
-                  <button class="btn btn--ghost btn--sm" type="button" id="btnCopiar">Copiar código</button>
-                  <button class="btn btn--ghost btn--sm" type="button" id="btnCopiarLink">Copiar link de pagamento</button>
-                </div>
-                <p class="pix__hint">Abra o app do seu banco, escolha <strong>Pix &rsaquo; Ler QR Code</strong> ou cole o código. O pedido é confirmado assim que o pagamento é identificado — você não sai desta página.</p>
-                <p class="pix__status" id="pixStatus" role="status"></p>
-              </div>
-            </div>
-          </div>
-      </form>
+        <button class="btn btn--ghost btn--full" type="button" id="btnVoltarFrete">Voltar para o frete</button>
+      </section>
+      </div>
     </div>
   </section>
 
