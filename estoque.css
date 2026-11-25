@@ -1,0 +1,114 @@
+/* Contador de escassez — Drop 01 */
+.estoque {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  max-width: 460px;
+  margin: 0 auto 1.6rem;
+  padding: 1rem 1.15rem;
+  border-radius: 18px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(6px);
+  text-align: left;
+}
+
+.estoque__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.8rem;
+  flex-wrap: wrap;
+}
+
+.estoque__label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.78);
+  margin: 0;
+}
+
+.estoque__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #ff3d7f;
+  box-shadow: 0 0 0 0 rgba(255, 61, 127, 0.6);
+  animation: estoque-pulse 1.8s infinite;
+}
+
+@keyframes estoque-pulse {
+  0% { box-shadow: 0 0 0 0 rgba(255, 61, 127, 0.55); }
+  70% { box-shadow: 0 0 0 10px rgba(255, 61, 127, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(255, 61, 127, 0); }
+}
+
+.estoque__number {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #fff;
+  white-space: nowrap;
+}
+
+.estoque__number strong {
+  font-variant-numeric: tabular-nums;
+  font-size: 1.25rem;
+  background: linear-gradient(120deg, #ff3d7f, #a855f7);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.estoque__track {
+  height: 8px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.12);
+  overflow: hidden;
+}
+
+.estoque__bar {
+  height: 100%;
+  width: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #ff3d7f, #a855f7 60%, #22d3ee);
+  transition: width 0.6s ease;
+}
+
+.estoque__note {
+  margin: 0;
+  font-size: 0.82rem;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.estoque__aviso {
+  display: none;
+  margin: 0;
+  padding: 0.55rem 0.75rem;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 61, 127, 0.45);
+  background: rgba(255, 61, 127, 0.14);
+  color: #ffd9e6;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.estoque__aviso.is-visible {
+  display: block;
+}
+
+.is-low-stock .estoque__dot {
+  background: #ffb020;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .estoque__dot { animation: none; }
+  .estoque__bar { transition: none; }
+}
+
+@media (max-width: 760px) {
+  .estoque { padding: 0.9rem 1rem; }
+}
