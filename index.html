@@ -6,6 +6,7 @@
 <meta name="description" content="KPOPSTORE — Drop 01: pack colecionável com 7 bonecos do BTS. Produto gratuito, você paga apenas o frete." />
 <meta name="theme-color" content="#06060a" />
 <title>KPOPSTORE — DROP 01 · Pack Colecionável 7 Bonecos</title>
+<link rel="stylesheet" href="estoque.css" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Outfit:wght@200;300;400;600;800;900&display=swap" rel="stylesheet" />
@@ -370,6 +371,17 @@
     <div class="cta__rings" aria-hidden="true"></div>
     <div class="container cta__inner">
       <p class="eyebrow eyebrow--light">Últimas unidades do drop</p>
+      <div class="estoque" role="status" aria-live="polite">
+        <div class="estoque__top">
+          <p class="estoque__label"><span class="estoque__dot" aria-hidden="true"></span> Estoque do Drop 01</p>
+          <p class="estoque__number"><strong data-estoque-atual>500</strong> un.</p>
+        </div>
+        <div class="estoque__track" role="progressbar" aria-valuemin="0" aria-valuemax="500" aria-valuenow="500" aria-label="Unidades restantes do Drop 01">
+          <div class="estoque__bar" data-estoque-barra></div>
+        </div>
+        <p class="estoque__note" data-estoque-rotulo>Restam 500 unidades — o lote é limitado e não repõe.</p>
+        <p class="estoque__aviso" data-estoque-aviso></p>
+      </div>
       <h2 class="display display--lg">Seu pack dos sonhos está mais perto do que você imagina.</h2>
       <a class="btn btn--light" href="#checkout">Quero meu pack colecionável</a>
     </div>
@@ -391,5 +403,6 @@
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
 <script src="app.js"></script>
+<script src="estoque.js"></script>
 </body>
 </html>
