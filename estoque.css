@@ -54,6 +54,12 @@
   white-space: nowrap;
 }
 
+.estoque__de {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.72);
+}
+
 .estoque__number strong {
   font-variant-numeric: tabular-nums;
   font-size: 1.25rem;
