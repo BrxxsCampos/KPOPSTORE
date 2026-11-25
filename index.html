@@ -286,6 +286,46 @@
         </div>
         <button class="btn btn--primary btn--full" type="submit">Calcular frete e finalizar</button>
         <p class="form__msg" id="formMsg" role="status"></p>
+
+        <!-- ETAPA 2: FRETE + PIX -->
+        <div class="pagamento" id="pagamento" hidden>
+          <div class="pagamento__frete">
+            <div class="pagamento__frete-info">
+              <span class="badge-frete">FRETE PROMOCIONAL</span>
+              <p class="pagamento__frete-valor"><span>Frete para o seu CEP</span><strong>R$ 37,00</strong></p>
+              <p class="pagamento__frete-note">Campa Drop 01: o produto é gratuito e o frete tem valor promocional de <strong>R$ 37,00</strong>.</p>
+            </div>
+            <ul class="pagamento__resumo" role="list">
+              <li><span>Pack colecionável (7 bonecos)</span><strong>Grátis</strong></li>
+              <li><span>Frete</span><strong>R$ 37,00</strong></li>
+              <li class="pagamento__total"><span>Total</span><strong>R$ 37,00</strong></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="pix">
+            <div class="pix__head">
+              <h3 class="pix__title">Pagamento via Pix</h3>
+              <span class="pix__tag">Único método · sem sair da página</span>
+            </div>
+
+            <button class="btn btn--primary btn--full pix__btn" type="button" id="btnPix">Gerar Pix</button>
+
+            <div class="pix__panel" id="pixPanel" hidden>
+              <div class="pix__qr" id="pixQr" aria-label="QR Code do Pix"></div>
+              <div class="pix__data">
+                <p class="pix__valor">R$ 37,00 <span>· frete do Drop 01</span></p>
+                <label class="pix__label" for="pixPayload">Código Pix copia e cola</label>
+                <textarea id="pixPayload" class="pix__code" readonly rows="3" spellcheck="false"></textarea>
+                <div class="pix__actions">
+                  <button class="btn btn--ghost btn--sm" type="button" id="btnCopiar">Copiar código</button>
+                  <button class="btn btn--ghost btn--sm" type="button" id="btnCopiarLink">Copiar link de pagamento</button>
+                </div>
+                <p class="pix__hint">Abra o app do seu banco, escolha <strong>Pix &rsaquo; Ler QR Code</strong> ou cole o código. O pedido é confirmado assim que o pagamento é identificado — você não sai desta página.</p>
+                <p class="pix__status" id="pixStatus" role="status"></p>
+              </div>
+            </div>
+          </div>
       </form>
     </div>
   </section>
