@@ -306,3 +306,39 @@ a{color:inherit}
   .pix__panel{grid-template-columns:1fr}
   .pix__qr{max-width:230px;margin:0 auto}
 }
+
+/* ---------- CHECKOUT INTEGRADO (3 etapas) ---------- */
+.checkout__flow{display:grid;gap:1rem}
+.flow{list-style:none;margin:0 0 .4rem;padding:0;display:flex;gap:.5rem;flex-wrap:wrap}
+.flow__item{display:flex;align-items:center;gap:.5rem;font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--muted);padding:.45rem .85rem;border-radius:999px;border:1px solid var(--line);background:rgba(255,255,255,.02)}
+.flow__item span{display:grid;place-items:center;width:20px;height:20px;border-radius:50%;font-size:.7rem;font-weight:800;
+  background:rgba(255,255,255,.08);color:var(--muted)}
+.flow__item.is-active{color:var(--text);border-color:rgba(255,46,136,.55);background:rgba(255,46,136,.1)}
+.flow__item.is-active span{background:linear-gradient(135deg,var(--pink),var(--violet));color:#fff}
+.flow__item.is-done span{background:var(--lime);color:#10120a}
+
+.form__head{margin-bottom:1.2rem;padding-bottom:.9rem;border-bottom:1px solid var(--line)}
+.form__step{display:inline-block;font-size:.7rem;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:#10120a;
+  background:var(--lime);padding:.25rem .65rem;border-radius:999px;margin-bottom:.6rem}
+.form__title{margin:0 0 .3rem;font-family:var(--font-display);font-size:1.35rem;font-weight:700}
+.form__sub{margin:0;color:var(--muted);font-size:.9rem}
+
+.stepbox{padding:1.6rem}
+.stepbox[hidden]{display:none}
+.stepbox__actions{display:grid;gap:.6rem;margin-top:1.1rem}
+.stepbox--pix{border-color:rgba(198,242,78,.35);background:linear-gradient(160deg,rgba(198,242,78,.06),rgba(255,255,255,.02))}
+.pix__title{font-size:1.05rem}
+
+.checkout__summary{margin-top:2rem;padding:1.3rem}
+.checkout__summary-title{margin:0 0 .8rem;font-family:var(--font-display);font-size:1.05rem;font-weight:700}
+.checkout__summary-list{list-style:none;margin:0;padding:0;display:grid;gap:.55rem;font-size:.92rem}
+.checkout__summary-list li{display:flex;justify-content:space-between;gap:1rem;color:var(--muted)}
+.checkout__summary-list strong{color:var(--text)}
+.checkout__summary-list li[hidden]{display:none}
+.checkout__summary-total{padding-top:.6rem;border-top:1px dashed var(--line)}
+.checkout__summary-total span,.checkout__summary-total strong{color:var(--text);font-weight:800;font-size:1.1rem}
+.checkout__summary-note{margin:.8rem 0 0;font-size:.82rem;color:var(--muted)}
+@media (max-width:980px){
+  .checkout__summary{margin-top:1.2rem}
+}

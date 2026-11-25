@@ -95,6 +95,35 @@
     window.setTimeout(function () { toast.classList.remove('show'); }, 4200);
   }
 
+  /* ---------- checkout: etapas ---------- */
+  var stepFrete = document.getElementById('stepFrete');
+  var stepPagamento = document.getElementById('stepPagamento');
+  var linhaFrete = document.getElementById('linhaFrete');
+  var linhaTotal = document.getElementById('linhaTotal');
+  var resumoNota = document.getElementById('resumoNota');
+  var flow = document.getElementById('flow');
+  var btnIrPagamento = document.getElementById('btnIrPagamento');
+  var btnVoltarDados = document.getElementById('btnVoltarDados');
+  var btnVoltarFrete = document.getElementById('btnVoltarFrete');
+  var btnStep1 = document.getElementById('btnStep1');
+
+  function setFlow(n) {
+    if (!flow) return;
+    Array.prototype.forEach.call(flow.children, function (li) {
+      var i = parseInt(li.getAttribute('data-flow'), 10);
+      li.classList.toggle('is-active', i <= n);
+      li.classList.toggle('is-done', i < n);
+    });
+  }
+
+  function liberarFrete() {
+    if (stepFrete) { stepFrete.hidden = false; stepFrete.classList.add('is-in'); }
+    if (linhaFrete) linhaFrete.hidden = false;
+    if (linhaTotal) linhaTotal.hidden = false;
+    if (resumoNota) resumoNota.textContent = 'Frete liberado! Preço promocional válido apenas hoje.';
+    setFlow(2);
+  }
+
   /* ---------- máscara de CEP ---------- */
   var cep = document.getElementById('cep');
   if (cep) {
@@ -102,12 +131,23 @@
       var v = cep.value.replace(/\D/g, '').slice(0, 8);
       cep.value = v.length > 5 ? v.slice(0, 5) + '-' + v.slice(5) : v;
       cep.setSelectionRange(cep.value.length, cep.value.length);
-      if (v.length === 8 && pagamento && pagamento.hidden) {
-        pagamento.hidden = false;
-        if (msg) {
-          msg.textContent = 'Frete promocional de R$ 37,00 liberado para o seu CEP.';
-          msg.classList.add('is-ok');
+      if (v.length === 8) {
+        if (stepFrete && stepFrete.hidden) {
+          liberarFrete();
+          if (msg) {
+            msg.textContent = 'Frete promocional de R$ 37,00 liberado para o seu CEP.';
+            msg.classList.add('is-ok');
+          }
+          showToast('Frete liberado! Continue para o pagamento Pix.');
+          if (stepFrete) stepFrete.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
+      } else {
+        if (stepFrete) stepFrete.hidden = true;
+        if (linhaFrete) linhaFrete.hidden = true;
+        if (linhaTotal) linhaTotal.hidden = true;
+        if (resumoNota) resumoNota.textContent = 'Informe seu CEP no formulário para liberarmos o valor do frete.';
+        if (stepPagamento) stepPagamento.hidden = true;
+        setFlow(1);
       }
     });
   }
@@ -115,7 +155,6 @@
   /* ---------- validação do formulário ---------- */
   var form = document.getElementById('formCheckout');
   var msg = document.getElementById('formMsg');
-  var pagamento = document.getElementById('pagamento');
   if (form) {
     form.addEventListener('submit', function (e) {
       e.preventDefault();
@@ -139,17 +178,13 @@
         return;
       }
       if (msg) msg.textContent = '';
-      showToast('Recebido! Confira o frete promocional abaixo.');
-      if (pagamento) {
-        pagamento.hidden = false;
-        pagamento.classList.add('is-in');
-      }
+      liberarFrete();
+      showToast('Dados confirmados! Frete promocional liberado.');
       if (msg) {
-        msg.textContent = 'Dados confirmados! Frete promocional de R$ 37,00 liberado abaixo.';
+        msg.textContent = 'Dados confirmados! Frete promocional de R$ 37,00 liberado.';
         msg.classList.add('is-ok');
       }
-      form.reset();
-      if (pagamento) pagamento.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      if (stepFrete) stepFrete.scrollIntoView({ behavior: 'smooth', block: 'center' });
     });
   }
 
@@ -261,10 +296,35 @@
     if (pixStatus) pixStatus.textContent = okMsg;
   }
 
+  if (btnIrPagamento) {
+    btnIrPagamento.addEventListener('click', function () {
+      if (!stepFrete || stepFrete.hidden) return;
+      stepPagamento.hidden = false;
+      stepPagamento.classList.add('is-in');
+      setFlow(3);
+      stepPagamento.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      if (btnPix) setTimeout(function () { btnPix.focus(); }, 450);
+    });
+  }
+  if (btnVoltarDados) {
+    btnVoltarDados.addEventListener('click', function () {
+      var nome = document.getElementById('nome');
+      if (nome) nome.focus();
+      if (form) form.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    });
+  }
+  if (btnVoltarFrete) {
+    btnVoltarFrete.addEventListener('click', function () {
+      if (stepPagamento) stepPagamento.hidden = true;
+      setFlow(2);
+      if (stepFrete) stepFrete.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    });
+  }
+
   if (btnPix) {
     btnPix.addEventListener('click', function () {
-      if (pagamento && pagamento.hidden) {
-        pagamento.hidden = false;
+      if (stepFrete && stepFrete.hidden) {
+        liberarFrete();
       }
       var payload = buildPixPayload();
       if (pixPayload) pixPayload.value = payload;
